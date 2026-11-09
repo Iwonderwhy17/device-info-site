@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: browser-privacy-lab
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Optional: a second deployment of this same app on a different host,
+      # used as the cross-origin tracker for the simulated-tracker test.
+      # - key: TRACKER_ORIGIN
+      #   value: https://browser-privacy-lab-tracker.onrender.com

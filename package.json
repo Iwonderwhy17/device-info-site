@@ -1,0 +1,17 @@
+{
+  "name": "browser-privacy-lab",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Consent-based browser privacy diagnostics with a provisional linkability model",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/score.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
