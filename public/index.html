@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browser Privacy Lab</title>
+  <meta name="description" content="See how recognizable your browser is on the surfaces a website can read. Local-first, no uploads.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%232c7658'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Browser Privacy Lab</a>
+    <button id="themeToggle" class="ghost" type="button" aria-label="Toggle colour theme">Theme</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Browser fingerprinting check</p>
+      <h1>How recognizable is your browser?</h1>
+      <p class="lede">Websites can read dozens of details about your browser without asking. This page reads the same kinds of details, in your browser, and tells you how much they single you out. Nothing is uploaded.</p>
+    </section>
+
+    <section class="result card" aria-live="polite">
+      <div class="grade-block">
+        <div id="grade" class="grade" aria-label="Privacy grade">–</div>
+        <span class="badge">Provisional model</span>
+      </div>
+      <div class="result-text">
+        <p id="headline" class="headline">Reading your browser…</p>
+        <p id="detail" class="muted"></p>
+        <div class="bits-row">
+          <div><span class="label">Identifying bits</span><strong id="bits">–</strong></div>
+          <div><span class="label">Reference population</span><strong id="refpop">–</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card two-col">
+      <div>
+        <h2>Why this grade</h2>
+        <ul id="caps" class="plain"></ul>
+      </div>
+      <div>
+        <h2>Not measured yet</h2>
+        <ul id="notMeasured" class="plain"></ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>Surfaces your browser exposes</h2>
+        <button id="refreshLocal" class="ghost" type="button">Re-read</button>
+      </div>
+      <p class="muted">Each row shows what the page read, and whether it counts toward your grade. <em>Real</em> means the value is your browser's own and adds identifying bits. <em>Randomized</em>, <em>masked</em> or <em>fixed</em> values add none.</p>
+      <div id="surfaces" class="table-wrap"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>Network tests</h2>
+        <button id="runNetwork" type="button">Run network tests</button>
+      </div>
+      <p class="muted">These check your local network addresses, the address this server sees, and whether simulated trackers load. They run only when you press the button.</p>
+      <div class="net-grid">
+        <div class="net-item"><span class="label">Address seen by this server</span><span id="echoIp" class="value">Not run</span></div>
+        <div class="net-item"><span class="label">WebRTC local candidates</span><span id="webrtc" class="value">Not run</span></div>
+        <div class="net-item"><span class="label">Simulated trackers</span><span id="trackers" class="value">Not run</span></div>
+        <div class="net-item"><span class="label">DNS resolver</span><span class="value">Not measured. Needs a DNS zone you control (see README).</span></div>
+      </div>
+      <p id="networkStatus" class="muted small" role="status"></p>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>Request headers</h2>
+        <button id="loadHeaders" class="ghost" type="button">Load headers</button>
+      </div>
+      <p class="muted">The headers your browser sent with this page request. Cookies and forwarding addresses are redacted.</p>
+      <pre id="headersOutput" class="output" aria-live="polite">Not loaded.</pre>
+    </section>
+
+    <section class="card prose">
+      <h2>How to read the grade</h2>
+      <p>The grade counts only the details that identify you: the ones that look like your own hardware and software. A value that is the same for everyone, or that changes on each read, identifies less. Each letter corresponds to a range of identifying bits, and bits double with every step: about 1 in 16 at A, about 1 in 1,000 at B, and so on.</p>
+      <p>The bit values come from a proposed model that has not yet been calibrated against real visitors. Treat the grade as an estimate, not a verdict. Two things matter more than the letter. First, the grade reflects what this page can read, not everything a tracker can see. Second, whether your browser can be linked across sites depends on tests this page does not yet run.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>No analytics, no third-party scripts, no fingerprint uploads, no database. The address and headers are returned to you and not stored.</p>
+  </footer>
+
+  <script src="score.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
