@@ -1,0 +1,139 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A local-first browser privacy self-check. No fingerprint data is uploaded or stored.">
+  <title>Browser Privacy Field Notes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">FIELD NOTES<span> / PRIVACY</span></a>
+    <button id="themeToggle" class="quiet-button">◐ Theme</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">THE OPEN WEB · A PRACTICAL GUIDE</p>
+      <h1>Your browser tells a story.<br><em>Find out what it says.</em></h1>
+      <p class="dek">A field guide to browser privacy, fingerprinting, cookies, and the small details that can make a device recognizable.</p>
+      <div class="byline">
+        <span>Privacy desk</span>
+        <span>8 minute read</span>
+        <span>Interactive lab</span>
+      </div>
+    </section>
+
+    <article class="article">
+      <p class="lead">A browser is more than a window onto the web. It sends technical details with requests, stores site data, and exposes a collection of capabilities that websites can sometimes combine into a fingerprint.</p>
+
+      <h2>01 / The quiet metadata leak</h2>
+      <p>Some information is needed for ordinary web functionality. A site may need to know whether a screen is narrow, which language to display, or whether a feature is supported. The privacy question is not simply whether a value exists. It is whether a site needs it, whether it is shared, and whether several values can be combined to distinguish one browser from another.</p>
+      <p>This page reads a limited set of browser properties locally. The values below are displayed in your browser and are not sent to this server.</p>
+
+      <section class="lab-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">LOCAL INSPECTION</p>
+            <h2>What this page can read</h2>
+          </div>
+          <span class="status-pill">Client-side only</span>
+        </div>
+        <p class="small-note">Values are read on this device. Cookie names are shown, never cookie values. Nothing in this panel is transmitted or stored by this page.</p>
+        <div id="localData" class="data-grid"></div>
+        <div class="panel-actions">
+          <button id="refreshData" class="secondary-button">Refresh details</button>
+        </div>
+      </section>
+
+      <h2>02 / Cookies: useful, occasionally nosy</h2>
+      <p>Cookies are small pieces of text associated with a website. They can keep a session signed in or remember a preference. They can also be used for tracking when sites and embedded services share identifiers. This demo creates one harmless first-party cookie named <code>privacy_lab_demo</code>. It contains only a short demo value and is never sent to another service.</p>
+
+      <section class="lab-panel compact">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">COOKIE DEMONSTRATION</p>
+            <h3>Set or clear the demo cookie</h3>
+          </div>
+        </div>
+        <p class="small-note">The cookie demonstrates how a site can store a small preference. It expires after one day.</p>
+        <div class="button-row">
+          <button id="setCookie" class="primary-button">Set demo cookie</button>
+          <button id="clearCookie" class="secondary-button">Clear demo cookie</button>
+        </div>
+        <p id="cookieStatus" class="inline-status">No action taken.</p>
+      </section>
+
+      <h2>03 / Fingerprinting, with the brakes on</h2>
+      <p>Fingerprinting combines browser and device characteristics. A canvas rendering result, WebGL renderer details, and font measurements can add entropy. These checks are imperfect: results vary by browser, operating system, graphics driver, privacy settings, and software updates.</p>
+      <p>The checks below run only after you press the button. They run locally and do not upload their results.</p>
+
+      <section class="lab-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">OPTIONAL ADVANCED CHECKS</p>
+            <h2>Run local fingerprint tests</h2>
+          </div>
+          <span class="status-pill">Requires your click</span>
+        </div>
+
+        <ul class="check-explain">
+          <li><strong>Canvas digest:</strong> hashes a locally rendered test image.</li>
+          <li><strong>WebGL details:</strong> reports graphics API support and available GPU information.</li>
+          <li><strong>Font probes:</strong> estimates whether selected common fonts are available.</li>
+          <li><strong>Privacy signals:</strong> checks Do Not Track, Global Privacy Control and selected browser APIs.</li>
+        </ul>
+
+        <button id="runAdvanced" class="primary-button">Run advanced checks</button>
+        <p id="advancedStatus" class="inline-status">Advanced checks have not been run.</p>
+        <div id="advancedResults" class="data-grid"></div>
+      </section>
+
+      <h2>04 / What reached the server?</h2>
+      <p>Browser JavaScript cannot see every HTTP request header. The server receives request headers such as the user agent and accepted content types. This endpoint shows the headers from your request, while redacting cookie and credential values.</p>
+
+      <section class="lab-panel compact">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">SERVER-SIDE VIEW</p>
+            <h3>Your request headers</h3>
+          </div>
+        </div>
+        <p class="small-note">Pressing this button makes one request to this site's server. Sensitive header values are redacted.</p>
+        <button id="loadHeaders" class="secondary-button">Show my request headers</button>
+        <pre id="headersOutput" class="code-output">Headers have not been requested.</pre>
+      </section>
+
+      <h2>05 / A browser privacy score is not a security audit</h2>
+      <p>The score below is a transparent, deliberately simple exposure indicator based only on the checks this page can perform. It is not a verdict on whether your browser is safe.</p>
+
+      <section class="score-panel">
+        <div>
+          <p class="eyebrow">LOCAL ESTIMATE</p>
+          <h2>Privacy exposure score</h2>
+          <p class="small-note">Lower exposure is better.</p>
+        </div>
+        <div class="score-display">
+          <strong id="scoreValue">—</strong>
+          <span>/ 10</span>
+          <small id="scoreLabel">Run checks to estimate</small>
+        </div>
+      </section>
+
+      <h2>06 / What this lab deliberately does not do</h2>
+      <p>This page does not exploit browser vulnerabilities, silently enumerate your device, probe your local network, attempt WebRTC address discovery, inspect other tabs, or read browsing history.</p>
+      <p>For a meaningful privacy review, keep your browser updated, restrict third-party cookies, review extensions, use HTTPS, and avoid installing extensions you do not trust. Privacy settings reduce exposure; they do not make a browser invisible.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span>FIELD NOTES / PRIVACY</span>
+    <span>Local-first diagnostics · No analytics · No trackers</span>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
